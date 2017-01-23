@@ -1,0 +1,7 @@
+{
+    "rootPath": "github.com/justuswilhelm/title-case-api",
+    "heroku": {
+        "install" : [ "./..." ],
+        "goVersion": "go1.7.4"
+    }
+}

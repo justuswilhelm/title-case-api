@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"os/exec"
 )
 
@@ -14,8 +15,8 @@ type Title struct {
 }
 
 const (
-	bind          = ":8080"
-	titleCaseTool = "./convert_titlecase.py"
+	defaultPort   = ":8080"
+	titleCaseTool = "bin/convert_titlecase.py"
 )
 
 func titleCase(input []byte) ([]byte, error) {
@@ -64,7 +65,11 @@ func titleCasePost(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = defaultPort
+	}
 	http.HandleFunc("/", titleCasePost)
-	log.Printf("Running server at %s", bind)
-	log.Fatal(http.ListenAndServe(bind, nil))
+	log.Printf("Running server at %s", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
