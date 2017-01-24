@@ -19,8 +19,9 @@ const (
 	titleCaseTool = "bin/convert_titlecase.py"
 )
 
-func titleCase(input []byte) ([]byte, error) {
+func titleCase(t Title) (*Title, error) {
 	cmd := exec.Command(titleCaseTool)
+	input := []byte(t.Title)
 
 	stdin, err := cmd.StdinPipe()
 	if err != nil {
@@ -46,7 +47,8 @@ func titleCase(input []byte) ([]byte, error) {
 	if err := cmd.Wait(); err != nil {
 		return nil, err
 	}
-	return result, nil
+
+	return &Title{string(result)}, nil
 }
 
 func titleCasePost(w http.ResponseWriter, r *http.Request) {
@@ -55,13 +57,13 @@ func titleCasePost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	result, err := titleCase([]byte(t.Title))
+	result, err := titleCase(t)
 	if err != nil {
 		log.Printf("Error in titleCase(): %v", err)
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	w.Write(result)
+	json.NewEncoder(w).Encode(result)
 }
 
 func main() {
