@@ -13,11 +13,13 @@ and receive the following result
 ```
 HTTP/1.1 200 OK
 Connection: keep-alive
-Content-Length: 42
+Content-Length: 55
 Content-Type: text/plain; charset=utf-8
-Date: Mon, 23 Jan 2017 23:26:05 GMT
+Date: Tue, 24 Jan 2017 11:42:55 GMT
 Server: Cowboy
 Via: 1.1 vegur
 
-Convert to Title Case: Go + Python Interop
+{
+    "Title": "Convert to Title Case: Go + Python Interop"
+}
 ```
