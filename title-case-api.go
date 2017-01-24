@@ -15,7 +15,7 @@ type Title struct {
 }
 
 const (
-	defaultPort   = ":8080"
+	defaultPort   = "8080"
 	titleCaseTool = "bin/convert_titlecase.py"
 )
 
